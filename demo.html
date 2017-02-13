@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/move.js"></script>
+
+<style type="text/css">
+*{margin:0;padding:0;}
+img{border:none;}
+li{list-style:none;}
+a{ text-decoration:none;  color:#fff;}
+.banner{ position:relative; margin:20px 50px; width:990px; height:370px;}
+.ban_pic{ position:relative;}
+.banner01{ position:absolute; left:0; top:0; opacity:0; filter:alpha(opacity:0); z-index:271;/*千万记得加层叠顺序*/}
+.ban01_left { width:490px; height:330px; }
+.ban01_center , .ban01_right{ width:240px; height:160px;} 
+.ban01_left , .ban01_center , .ban01_right{ float:left; position:relative;}
+.center_02 , .right_02{ margin-top:10px;}
+.ban01_left span , .ban01_center span , .ban01_right span{ position:absolute; left:0; bottom:0; width:100%; height:50px; line-height:50px; background:#000; opacity:0.5; filter:alpha(opacity:50);}
+.ban01_center span , .ban01_right span{ height:40px; line-height:40px;}
+.center_02 span , .right_03 span{ top:290px;}
+.ban01_left p, .ban01_center p, .ban01_right p{ position:absolute; left:20px; bottom:0; line-height:50px; font-size:16px; font-weight:bold}
+.ban01_center p , .ban01_right p{line-height:40px;}
+.ban01_left p{ font-size:20px;}
+.center_02 p , .right_03 p{ top:290px;}
+.ban01_center{ margin:0 10px;}
+.ban01_left a:hover span , .ban01_center a:hover span , .ban01_right a:hover span { background:#e51010; opacity:1; filter:alpha(opacity:100);}
+
+.ban_btn{ position:absolute;left:460px;top:330px; width:990px; height:30px;}
+.ban_btn ul{margin:0 auto; }
+.ban_btn li{ float:left; margin:8px;}
+.ban_btn li a{ display:block; width:16px; height:16px; background:#c5c5c5;}
+.ban_btn li.btn_cur a{ background:#e51010;}
+</style>
+<script type="text/javascript">
+	window.onload=function(){
+		var bannerBox=document.getElementById('bannerBox');//最大banner中的box
+		var icoList=document.getElementById('ico_list');
+		var abtn=icoList.getElementsByTagName('li');
+		var banPic=document.getElementById('ban_pic');
+		var aBanner=banPic.getElementsByClassName('banner01');//获取需要运动的banner01大块div
+		//alert(aBanner.length);
+		var i=0;
+		var timer=null;
+		var oIndex=0;
+		var iNow=0;//这里解决重复点击同一张图片而出现的闪烁，这个变量也是同时为以后的自动播放做准备
+
+		function tab(){//封装小按钮和大图同时切换函数
+			for(i=0;i<abtn.length;i++){
+				abtn[i].className='';
+				aBanner[i].style.opacity=0;
+				aBanner[i].style.filter='alpha(opacity:0)';
+				aBanner[i].style.zIndex=271;
+			}
+				abtn[iNow].className='btn_cur';
+				aBanner[iNow].style.zIndex=272;
+				startMove(aBanner[iNow], {opacity:100}, MIAOV_MOVE_TYPE.BUFFER);//缓冲运动
+		}
+		
+		function autoPlay(){//封装自动播放函数
+			iNow++;
+			if(iNow>=abtn.length){
+				iNow=0;	
+			}
+			tab();
+		}
+		
+		timer=setInterval(autoPlay,2000);//开定时器，让banner自动播放
+		banPic.onmouseover=function(){
+			clearInterval(timer);
+		}
+		
+		banPic.onmouseout=function(){
+			timer=setInterval(autoPlay,2000);
+		}
+		
+		
+		for(i=0;i<abtn.length;i++){//小按钮发生鼠标移入移出事件
+			abtn[i].index=i;
+			abtn[i].onmouseover=function(){
+				clearInterval(timer);
+				//判断
+				if(iNow==this.index){//如果始终点击的是同一张图片，那就什么动作也不做，直接return掉，否则的话就直接下面的循环动作
+					return;
+				}
+				iNow=this.index;//赋值
+				tab();
+			}//onclick end\
+		}//for end\
+		
+		
+		
+		
+		
+		
+		
+		
+	}//window.onload end\
+</script>
+</head>
+
+<body>
+	<div class="banner" id="bannerBox">
+    	<div class="ban_pic" id="ban_pic">
+        	<!--1屏-->
+        	<div class="banner01"  style=" z-index:272; opacity:1; filter:alpha(opacity:100);">
+            	<div class="ban01_left">
+                	<a href="#" target="_blank"><img src="images/ad01.jpg" width="490" height="330" />
+                    <span></span>
+                    <p>试驾最便宜的保时捷 718 Cayman来辆不？</p>
+                    </a>
+                </div>
+                <div class="ban01_center">
+                	<div class="center_01">
+                        <a href="#" target="_blank"><img src="images/ad02.jpg" width="240" height="160" />
+                        <span></span>
+                        <p>看不懂的销量 传祺GS4</p>
+                        </a>
+                    </div>
+                	<div class="center_02">
+                        <a href="#" target="_blank"><img src="images/ad03.jpg" width="240" height="160" />
+                        <span></span>
+                        <p>宝马X4不再“孤单”</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="ban01_right">
+                	<div class="right_01">
+                        <a href="#" target="_blank"><img src="images/ad04.jpg" width="240" height="160" />
+                        <span></span>
+                        <p>下半年新车来袭</p>
+                        </a>
+                    </div>
+                	<div class="right_02">
+                        <a href="#" target="_blank"><img src="images/ad05.jpg" width="240" height="160" /></a>
+                    </div>
+                </div>
+            </div>
+            <!--2屏-->
+            <div class="banner01">
+            	<div class="ban01_left">
+                	<a href="#" target="_blank"><img src="images/ad06.jpg" width="490" height="330" />
+                    <span></span>
+                    <p>赵璞带你五分钟看懂新思域</p>
+                    </a>
+                </div>
+                <div class="ban01_center">
+                	<div class="center_01">
+                        <a href="#" target="_blank"><img src="images/ad07.jpg" width="240" height="160" />
+                        <span></span>
+                        <p>看不懂的销量 传祺GS4</p>
+                        </a>
+                    </div>
+                	<div class="center_02">
+                        <a href="#" target="_blank"><img src="images/ad09.jpg" width="240" height="160" />
+                            <span></span>
+                            <p>下半年新车来袭</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="ban01_right">
+                	<div class="right_01">
+                        <a href="#" target="_blank"><img src="images/ad08.jpg" width="240" height="160" />
+                        
+                        </a>
+                    </div>
+                	<div class="right_02 right_03">
+                        <a href="#" target="_blank"><img src="images/ad10.jpg" width="240" height="160" />
+                        	<span></span>
+                        	<p>宝马X4不再“孤单”</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!--3屏-->
+            <div class="banner01">
+            	<div class="ban01_left">
+                	<a href="#" target="_blank"><img src="images/ad11.jpg" width="490" height="330" />
+                    <span></span>
+                    <p>首测福克斯RS 350Ps+6MT+4驱</p>
+                    </a>
+                </div>
+                <div class="ban01_center">
+                	<div class="center_01">
+                        <a href="#" target="_blank"><img src="images/ad12.jpg" width="240" height="160" /></a>
+                    </div>
+                	<div class="center_02">
+                        <a href="#" target="_blank"><img src="images/ad13.jpg" width="240" height="160" />
+                            <span></span>
+                            <p>文青 第三代马自达MX-5</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="ban01_right">
+                	<div class="right_01">
+                        <a href="#" target="_blank"><img src="images/ad14.jpg" width="240" height="160" />
+                        	<span></span>
+                        	<p>众泰T600对比长安CS75</p>
+                        </a>
+                    </div>
+                	<div class="right_02 right_03">
+                        <a href="#" target="_blank"><img src="images/ad15.jpg" width="240" height="160" />
+                        	<span></span>
+                        	<p>MINI抢购 限量100台</p>
+                        </a>
+                    </div>
+                </div>
+            </div><!--3屏 end\-->
+        </div><!--"ban_pic end\-->
+        <div class="ban_btn" id="ico_list">
+        	<ul>
+            	<li class="btn_cur"><a href="javascript:void()"></a></li>
+                <li><a href="javascript:void()"></a></li>
+                <li><a href="javascript:void()"></a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
